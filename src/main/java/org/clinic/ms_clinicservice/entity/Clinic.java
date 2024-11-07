@@ -26,6 +26,7 @@ public class Clinic {
     @Column(name = "description")
     private String description;
 
+    @Builder.Default
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 

@@ -5,7 +5,6 @@ import org.clinic.ms_clinicservice.dto.ClinicDTO;
 import org.clinic.ms_clinicservice.entity.Clinic;
 import org.clinic.ms_clinicservice.repository.ClinicRepository;
 import org.clinic.ms_clinicservice.service.ClinicService;
-import org.clinic.ms_clinicservice.service.MapServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;

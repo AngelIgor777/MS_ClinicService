@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:14
+    container_name: ms_clinic_service_db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - ms_network
+
+  flyway:
+    image: flyway/flyway:8.5.0
+    depends_on:
+      - db
+    environment:
+      FLYWAY_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      FLYWAY_USER: ${DB_USER}
+      FLYWAY_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ../src/main/resources/db/migration:/flyway/sql
+    networks:
+      - ms_network
+    command: -url=jdbc:postgresql://db:5432/${DB_NAME} -user=${DB_USER} -password=${DB_PASSWORD} migrate
+
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: ms_clinic_service_app
+    depends_on:
+      - db
+      - flyway
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      PORT: ${APP_PORT}
+    ports:
+      - "${APP_PORT}:8080"
+    networks:
+      - ms_network
+
+
+volumes:
+  db_data:
+
+networks:
+  ms_network:
+    driver: bridge

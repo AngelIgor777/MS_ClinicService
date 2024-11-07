@@ -1,7 +1,8 @@
-package org.clinic.ms_clinicservice.service;
+package org.clinic.ms_clinicservice.service.impl;
 
 import org.clinic.ms_clinicservice.dto.ClinicDTO;
 import org.clinic.ms_clinicservice.entity.Clinic;
+import org.clinic.ms_clinicservice.service.MapService;
 import org.springframework.stereotype.Service;
 
 @Service

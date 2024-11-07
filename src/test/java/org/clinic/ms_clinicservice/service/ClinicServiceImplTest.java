@@ -2,6 +2,7 @@ package org.clinic.ms_clinicservice.service;
 
 import org.clinic.ms_clinicservice.dto.ClinicDTO;
 import org.clinic.ms_clinicservice.entity.Clinic;
+import org.clinic.ms_clinicservice.service.impl.ClinicServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,11 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class ClinicServiceTest {
+class ClinicServiceImplTest {
 
 
     @Autowired
-    private ClinicService clinicService;
+    private ClinicServiceImpl clinicServiceImpl;
 
     private Clinic clinic;
 
@@ -34,7 +35,7 @@ class ClinicServiceTest {
 
     @Test
     void testCreateClinic() {
-        Clinic savedClinic = clinicService.createClinic(clinic);
+        Clinic savedClinic = clinicServiceImpl.createClinic(clinic);
 
         assertNotNull(savedClinic.getId());
         assertEquals("Test Clinic", savedClinic.getName());
@@ -42,8 +43,8 @@ class ClinicServiceTest {
 
     @Test
     void testGetClinicById() {
-        Clinic savedClinic = clinicService.createClinic(clinic);
-        ClinicDTO clinicDTO = clinicService.getClinicById(savedClinic.getId());
+        Clinic savedClinic = clinicServiceImpl.createClinic(clinic);
+        ClinicDTO clinicDTO = clinicServiceImpl.getClinicById(savedClinic.getId());
 
         assertNotNull(clinicDTO);
         assertEquals(savedClinic.getId(), clinicDTO.getId());
@@ -54,20 +55,20 @@ class ClinicServiceTest {
     void testGetAllClinics() {
         Clinic clinic2 = new Clinic();
         clinic2.setName("Another Clinic");
-        clinicService.createClinic(clinic);
-        clinicService.createClinic(clinic2);
+        clinicServiceImpl.createClinic(clinic);
+        clinicServiceImpl.createClinic(clinic2);
 
-        List<ClinicDTO> allClinics = clinicService.getAllClinics();
+        List<ClinicDTO> allClinics = clinicServiceImpl.getAllClinics();
 
         assertEquals(2, allClinics.size());
     }
 
     @Test
     void testUpdateClinic() {
-        Clinic savedClinic = clinicService.createClinic(clinic);
+        Clinic savedClinic = clinicServiceImpl.createClinic(clinic);
         savedClinic.setName("Updated Clinic");
 
-        Clinic updatedClinic = clinicService.updateClinic(savedClinic.getId(), savedClinic);
+        Clinic updatedClinic = clinicServiceImpl.updateClinic(savedClinic.getId(), savedClinic);
 
         assertNotNull(updatedClinic);
         assertEquals("Updated Clinic", updatedClinic.getName());
@@ -75,9 +76,9 @@ class ClinicServiceTest {
 
     @Test
     void testDeleteClinic() {
-        Clinic savedClinic = clinicService.createClinic(clinic);
+        Clinic savedClinic = clinicServiceImpl.createClinic(clinic);
 
-        int i = clinicService.deleteClinic(savedClinic.getId());
+        int i = clinicServiceImpl.deleteClinic(savedClinic.getId());
 
         Assertions.assertEquals(savedClinic.getId(), i);
     }

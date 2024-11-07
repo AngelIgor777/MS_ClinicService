@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
 public class AddressService {
 

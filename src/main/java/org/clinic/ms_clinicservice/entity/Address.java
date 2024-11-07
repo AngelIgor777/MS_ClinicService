@@ -33,5 +33,4 @@ public class Address {
     @Column(name = "building_number", nullable = false, length = 32)
     private String buildingNumber;
 
-    // Getters and Setters
 }

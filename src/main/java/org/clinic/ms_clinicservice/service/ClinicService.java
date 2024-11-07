@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.clinic.ms_clinicservice.dto.ClinicDTO;
 import org.clinic.ms_clinicservice.entity.Clinic;
 import org.clinic.ms_clinicservice.repository.ClinicRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 @Transactional
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class ClinicService {
 
     private final ClinicRepository clinicRepository;
+    private final MapService mapService;
 
 
     public Clinic createClinic(Clinic clinic) {
@@ -25,19 +26,14 @@ public class ClinicService {
 
     public ClinicDTO getClinicById(Integer id) {
         Clinic clinic = clinicRepository.findById(id).orElse(null);
-        return mapToClinicDTO(clinic);
+        return mapService.mapToClinicDTO(clinic);
     }
 
     public List<ClinicDTO> getAllClinics() {
         List<Clinic> all = clinicRepository.findAll();
         return all.stream()
-                .map(this::mapToClinicDTO).toList();
+                .map(mapService::mapToClinicDTO).toList();
     }
-
-//    public List<ClinicDTO> getAllClinicsDTO(List<Clinic> clinics) {
-//        return clinics.stream()
-//                .map(this::mapToClinicDTO).toList();
-//    }
 
 
     public Clinic updateClinic(Integer id, Clinic updatedClinic) {
@@ -48,28 +44,10 @@ public class ClinicService {
         return null;
     }
 
-    public void deleteClinic(Integer id) {
+    public int deleteClinic(Integer id) {
         clinicRepository.deleteById(id);
+        return id;
     }
 
-    public ClinicDTO mapToClinicDTO(Clinic clinic) {
-        int addressId = 0;
-        int contactId = 0;
-        if (clinic.getAddress() != null) {
-            addressId = clinic.getAddress().getId();
-        }
-        if (clinic.getContact() != null) {
-            contactId = clinic.getContact().getId();
-        }
 
-
-        return ClinicDTO.builder()
-                .id(clinic.getId())
-                .name(clinic.getName())
-                .addressId(addressId)
-                .createdAt(clinic.getCreatedAt().toString())
-                .contactId(contactId)
-                .description(clinic.getDescription())
-                .build();
-    }
 }

@@ -14,7 +14,6 @@ import javax.persistence.*;
         @UniqueConstraint(columnNames = {"id", "clinic_id", "city", "street", "building_number"})
 })
 public class Address {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -46,6 +46,7 @@ public class ClinicServiceImpl implements ClinicService {
     }
 
 
+
     public Clinic updateClinic(Integer id, Clinic updatedClinic) {
         if (clinicRepository.notExistsByNameAndExistById(updatedClinic.getName(), id)) {
             updatedClinic.setId(id);
@@ -58,6 +59,4 @@ public class ClinicServiceImpl implements ClinicService {
         clinicRepository.deleteById(id);
         return id;
     }
-
-
 }

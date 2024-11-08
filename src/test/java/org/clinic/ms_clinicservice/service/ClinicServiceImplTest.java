@@ -84,4 +84,6 @@ class ClinicServiceImplTest {
 
         Assertions.assertEquals(savedClinic.getId(), i);
     }
+
+
 }

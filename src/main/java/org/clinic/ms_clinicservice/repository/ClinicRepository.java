@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface ClinicRepository extends JpaRepository<Clinic, Integer> {
     boolean existsByName(String name);
 
-    @Query("select case when count(c) > 0 then true else false end from Clinic c where c.name != ?1 and c.id = ?2")
-    boolean notExistsByNameAndExistById(String name,int id);
+    @Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END " +
+            "FROM Clinic c WHERE LOWER(c.name) != LOWER(?1) AND c.id = ?2")
+    boolean notExistsByNameAndExistById(String name, int id);
 }

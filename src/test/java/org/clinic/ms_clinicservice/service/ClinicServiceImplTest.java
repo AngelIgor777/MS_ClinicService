@@ -66,12 +66,14 @@ class ClinicServiceImplTest {
     @Test
     void testUpdateClinic() {
         Clinic savedClinic = clinicServiceImpl.createClinic(clinic);
-        savedClinic.setName("Updated Clinic");
 
-        Clinic updatedClinic = clinicServiceImpl.updateClinic(savedClinic.getId(), savedClinic);
+
+        Clinic update = Clinic.builder().name("update-name").build();
+
+        Clinic updatedClinic = clinicServiceImpl.updateClinic(savedClinic.getId(), update);
 
         assertNotNull(updatedClinic);
-        assertEquals("Updated Clinic", updatedClinic.getName());
+        assertEquals("update-name", updatedClinic.getName());
     }
 
     @Test

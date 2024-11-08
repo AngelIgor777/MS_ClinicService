@@ -1,18 +1,23 @@
 package org.clinic.ms_clinicservice.controller;
+
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.clinic.ms_clinicservice.dto.ClinicDTO;
 import org.clinic.ms_clinicservice.entity.Clinic;
+import org.clinic.ms_clinicservice.exception.ErrorMessage;
 import org.clinic.ms_clinicservice.service.impl.ClinicServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityExistsException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,7 +37,9 @@ public class ClinicController {
             description = "Создаёт профиль клиники для последующего добавления медиков и докторов",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Успешно зарегистрировано",
-                            content = @Content(schema = @Schema(implementation = Clinic.class))),
+                            content = @Content(examples = @ExampleObject(value = "{\"id\" : \"23\"}"))),
+                    @ApiResponse(responseCode = "409", description = "Уникальные данные уже зарегистрированы",
+                            content = @Content(schema = @Schema(implementation = ErrorMessage.class))),
             })
     public ResponseEntity<HashMap<String, Integer>> createClinic(@RequestBody Clinic clinic) {
         Clinic createdClinic = clinicServiceImpl.createClinic(clinic);
@@ -47,18 +54,20 @@ public class ClinicController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Успешно получено",
                             content = @Content(schema = @Schema(implementation = Clinic.class))),
+                    @ApiResponse(responseCode = "404", description = "Данные не найдены",
+                            content = @Content(schema = @Schema(implementation = ErrorMessage.class))),
             })
     @GetMapping("/{id}")
     public ResponseEntity<ClinicDTO> getClinicById(@PathVariable Integer id) {
         ClinicDTO clinic = clinicServiceImpl.getClinicById(id);
-        return clinic != null ? ResponseEntity.ok(clinic) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(clinic);
     }
 
 
     @Operation(summary = "Получение всех клиник",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Успешно получены все клиники",
-                            content = @Content(schema = @Schema(implementation = Clinic.class))),
+                            content = @Content(schema = @Schema(implementation = ClinicDTO.class))),
             })
     @GetMapping
     public ResponseEntity<List<ClinicDTO>> getAllClinics() {

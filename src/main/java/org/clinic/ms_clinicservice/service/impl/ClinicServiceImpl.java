@@ -24,7 +24,7 @@ public class ClinicServiceImpl implements ClinicService {
     private final MapServiceImpl mapServiceImpl;
 
 
-    public Clinic createClinic(Clinic clinic) {
+    public Clinic create(Clinic clinic) {
         if (clinicRepository.existsByName(clinic.getName())) {
             throw new EntityExistsException("Clinic with name " + clinic.getName() + " already exists");
         }

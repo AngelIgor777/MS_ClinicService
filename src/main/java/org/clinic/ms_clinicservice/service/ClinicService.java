@@ -6,7 +6,7 @@ import org.clinic.ms_clinicservice.entity.Clinic;
 import java.util.List;
 
 public interface ClinicService {
-     Clinic createClinic(Clinic clinic);
+     Clinic create(Clinic clinic);
 
     ClinicDTO getClinicById(Integer id);
 

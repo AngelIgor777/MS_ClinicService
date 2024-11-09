@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface AddressService {
 
-    Address createAddress(Address address);
+    Address create(Address address);
 
-    Address getAddressById(Integer id);
+    Address getById(Integer id);
 
-    List<Address> getAllAddresses();
+    List<Address> getAll();
 
-    Address updateAddress(Integer id, Address updatedAddress);
+    Address update(Integer id, Address updatedAddress);
 
-    void deleteAddress(Integer id);
+    void delete(Integer id);
 }

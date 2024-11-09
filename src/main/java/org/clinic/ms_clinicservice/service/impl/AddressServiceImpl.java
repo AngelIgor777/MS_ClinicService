@@ -16,19 +16,19 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
 
-    public Address createAddress(Address address) {
+    public Address create(Address address) {
         return addressRepository.save(address);
     }
 
-    public Address getAddressById(Integer id) {
+    public Address getById(Integer id) {
         return addressRepository.findById(id).orElse(null);
     }
 
-    public List<Address> getAllAddresses() {
+    public List<Address> getAll() {
         return addressRepository.findAll();
     }
 
-    public Address updateAddress(Integer id, Address updatedAddress) {
+    public Address update(Integer id, Address updatedAddress) {
         if (addressRepository.existsById(id)) {
             updatedAddress.setId(id);
             return addressRepository.save(updatedAddress);
@@ -36,7 +36,7 @@ public class AddressServiceImpl implements AddressService {
         return null;
     }
 
-    public void deleteAddress(Integer id) {
+    public void delete(Integer id) {
         addressRepository.deleteById(id);
     }
 }

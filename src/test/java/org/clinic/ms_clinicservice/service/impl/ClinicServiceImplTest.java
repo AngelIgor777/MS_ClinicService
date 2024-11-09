@@ -1,8 +1,7 @@
-package org.clinic.ms_clinicservice.service;
+package org.clinic.ms_clinicservice.service.impl;
 
 import org.clinic.ms_clinicservice.dto.ClinicDTO;
 import org.clinic.ms_clinicservice.entity.Clinic;
-import org.clinic.ms_clinicservice.service.impl.ClinicServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,8 +33,8 @@ class ClinicServiceImplTest {
     }
 
     @Test
-    void testCreateClinic() {
-        Clinic savedClinic = clinicServiceImpl.createClinic(clinic);
+    void testCreate() {
+        Clinic savedClinic = clinicServiceImpl.create(clinic);
 
         assertNotNull(savedClinic.getId());
         assertEquals("Test Clinic", savedClinic.getName());
@@ -43,7 +42,7 @@ class ClinicServiceImplTest {
 
     @Test
     void testGetClinicById() {
-        Clinic savedClinic = clinicServiceImpl.createClinic(clinic);
+        Clinic savedClinic = clinicServiceImpl.create(clinic);
         ClinicDTO clinicDTO = clinicServiceImpl.getClinicById(savedClinic.getId());
 
         assertNotNull(clinicDTO);
@@ -55,8 +54,8 @@ class ClinicServiceImplTest {
     void testGetAllClinics() {
         Clinic clinic2 = new Clinic();
         clinic2.setName("Another Clinic");
-        clinicServiceImpl.createClinic(clinic);
-        clinicServiceImpl.createClinic(clinic2);
+        clinicServiceImpl.create(clinic);
+        clinicServiceImpl.create(clinic2);
 
         List<ClinicDTO> allClinics = clinicServiceImpl.getAllClinics();
 
@@ -65,7 +64,7 @@ class ClinicServiceImplTest {
 
     @Test
     void testUpdateClinic() {
-        Clinic savedClinic = clinicServiceImpl.createClinic(clinic);
+        Clinic savedClinic = clinicServiceImpl.create(clinic);
 
 
         Clinic update = Clinic.builder().name("update-name").build();
@@ -78,7 +77,7 @@ class ClinicServiceImplTest {
 
     @Test
     void testDeleteClinic() {
-        Clinic savedClinic = clinicServiceImpl.createClinic(clinic);
+        Clinic savedClinic = clinicServiceImpl.create(clinic);
 
         int i = clinicServiceImpl.deleteClinic(savedClinic.getId());
 

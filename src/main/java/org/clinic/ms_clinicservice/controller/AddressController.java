@@ -20,31 +20,31 @@ public class AddressController {
 
     @PostMapping
     public ResponseEntity<Address> createAddress(@RequestBody Address address) {
-        Address createdAddress = addressServiceImpl.createAddress(address);
+        Address createdAddress = addressServiceImpl.create(address);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAddress);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Address> getAddressById(@PathVariable Integer id) {
-        Address address = addressServiceImpl.getAddressById(id);
+        Address address = addressServiceImpl.getById(id);
         return address != null ? ResponseEntity.ok(address) : ResponseEntity.notFound().build();
     }
 
     @GetMapping
     public ResponseEntity<List<Address>> getAllAddresses() {
-        List<Address> addresses = addressServiceImpl.getAllAddresses();
+        List<Address> addresses = addressServiceImpl.getAll();
         return ResponseEntity.ok(addresses);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Address> updateAddress(@PathVariable Integer id, @RequestBody Address address) {
-        Address updatedAddress = addressServiceImpl.updateAddress(id, address);
+        Address updatedAddress = addressServiceImpl.update(id, address);
         return updatedAddress != null ? ResponseEntity.ok(updatedAddress) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Integer id) {
-        addressServiceImpl.deleteAddress(id);
+        addressServiceImpl.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

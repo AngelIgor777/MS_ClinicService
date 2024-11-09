@@ -47,7 +47,7 @@ public class ClinicController {
             })
     public ResponseEntity<ClinicIdResponse> createClinic(@RequestBody ClinicBasicRequest clinicBasicRequest) {
         Clinic clinic = mapService.mapToClinic(clinicBasicRequest);
-        Clinic createdClinic = clinicServiceImpl.createClinic(clinic);
+        Clinic createdClinic = clinicServiceImpl.create(clinic);
 
         ClinicIdResponse idResponse = new ClinicIdResponse(createdClinic.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(idResponse);
